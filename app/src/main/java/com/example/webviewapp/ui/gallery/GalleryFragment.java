@@ -29,25 +29,40 @@ public class GalleryFragment extends Fragment {
 
     String url = "https://www.google.com/";
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    private Bundle webViewState;
+        //inicializar variables, como la url que quieres cargar.
+        // Algunas otras cosas que quieres que solo se llame una vez
+        url = "https://www.google.com/";
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        // Aqui inicializar tu vistas y componentes
         View root = inflater.inflate(R.layout.fragment_gallery, container,false);
-        // Bloque 1
+
         miVisorWeb = (WebView) root.findViewById(R.id.webViewGoogle);
+
+        return root;
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle     savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //Aqui va todo el código restante
         miVisorWeb.requestFocus();
         WebSettings webSettings = miVisorWeb.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setCacheMode(LOAD_CACHE_ELSE_NETWORK);
         webSettings.setAppCacheEnabled(true);
 
-        miVisorWeb.restoreState();
         miVisorWeb.loadUrl(url.toString());
         CookieManager.getInstance().setAcceptCookie(true);
-//        // Bloque 2
+        // Bloque 2
         miVisorWeb.setWebViewClient( new WebViewClient(){
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
@@ -55,20 +70,14 @@ public class GalleryFragment extends Fragment {
             }
         });
 
-        miVisorWeb.setOnKeyListener(new View.OnKeyListener()
-        {
+        miVisorWeb.setOnKeyListener(new View.OnKeyListener(){
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if(event.getAction() == KeyEvent.ACTION_DOWN)
-                {
+            public boolean onKey(View v, int keyCode, KeyEvent event){
+                if(event.getAction() == KeyEvent.ACTION_DOWN){
                     WebView webView = (WebView) v;
-
-                    switch(keyCode)
-                    {
+                    switch(keyCode){
                         case KeyEvent.KEYCODE_BACK:
-                            if(webView.canGoBack())
-                            {
+                            if(webView.canGoBack()){
                                 webView.goBack();
                                 return true;
                             }
@@ -80,6 +89,5 @@ public class GalleryFragment extends Fragment {
             }
         });
 
-        return root;
     }
 }

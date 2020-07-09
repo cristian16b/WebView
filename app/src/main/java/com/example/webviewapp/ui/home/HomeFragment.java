@@ -38,12 +38,12 @@ public class HomeFragment extends Fragment {
         final WebSettings ajustesVisorWeb = miVisorWeb.getSettings();
         miVisorWeb.setWebViewClient(new WebViewClient());
         ajustesVisorWeb.setJavaScriptEnabled(true);
-//        miVisorWeb.loadUrl(getUrl());
-        miVisorWeb.loadUrl(url.toString());
+        miVisorWeb.loadUrl(getUrl());
+//        miVisorWeb.loadUrl(url.toString());
         // Bloque 2
         miVisorWeb.setWebViewClient( new WebViewClient(){
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                saveUrl(url);
+                saveUrl(url);
                 view.loadUrl(url);
                 return false;
             }
